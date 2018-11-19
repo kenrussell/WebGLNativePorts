@@ -13,16 +13,16 @@ endif()
 
 project( aquarium )
 
-include_directories(thirdparty/stb)
-include_directories(thirdparty/glfw/include)
-include_directories(thirdparty/glad/include)
-include_directories(thirdparty/rapidjson/include)
+include_directories(${CMAKE_SOURCE_DIR}/../thirdparty/stb)
+include_directories(${CMAKE_SOURCE_DIR}/../thirdparty/glfw/include)
+include_directories(${CMAKE_SOURCE_DIR}/../thirdparty/glad/include)
+include_directories(${CMAKE_SOURCE_DIR}/../thirdparty/rapidjson/include)
   
 # Glad
 add_library(glad STATIC
-  thirdparty/glad/src/glad.c
-  thirdparty/glad/include/glad/glad.h
-  thirdparty/glad/include/KHR/khrplatform.h
+  ${CMAKE_SOURCE_DIR}/../thirdparty/glad/src/glad.c
+  ${CMAKE_SOURCE_DIR}/../thirdparty/glad/include/glad/glad.h
+  ${CMAKE_SOURCE_DIR}/../thirdparty/glad/include/KHR/khrplatform.h
 )
 set(GLAD_INCLUDE_DIR thirdparty/glad/include)
   
@@ -31,7 +31,7 @@ set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
-add_subdirectory(thirdparty/glfw)
+add_subdirectory(${CMAKE_SOURCE_DIR}/../thirdparty/glfw ${CMAKE_BINARY_DIR}/glfw)
 
 target_include_directories(glad SYSTEM PUBLIC ${GLAD_INCLUDE_DIR})
 
@@ -40,7 +40,7 @@ list(APPEND THIRDPARTY_LIBS
   glfw
 )
 
-include_directories(${CMAKE_SOURCE_DIR} thirdparty/rapidjson)
+include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_SOURCE_DIR}/../thirdparty/rapidjson)
 
 add_executable( aquarium 
 src/ASSERT.h

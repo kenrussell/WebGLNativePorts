@@ -31,7 +31,7 @@ Native Aquarium is a native implementation of [WebGL Aquarium](https://github.co
 Native Aquarium uses cmake to build on Linux, macOS and Windows.
 ```sh
 # cd the repo
-cd aquarium-native
+cd aquarium-direct-map
 
 # get submodules
 git submodule init && git submodule update
