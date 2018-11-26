@@ -1,3 +1,8 @@
+//
+// Copyright (c) 2018 The WebGLNativePorts Project Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // Buffer.cpp: Implements the index or vertex buffer wrappers and resource bindings of OpenGL.
 
 #include "Buffer.h"
@@ -7,12 +12,15 @@
 #include "ASSERT.h"
 
 Buffer::Buffer(AttribBuffer *attribBuffer, GLenum target)
-    : target(target),
-      numComponents_(attribBuffer->getNumComponents()),
-      numElements_(attribBuffer->getNumElements()),
-      normalize_(true),
-      stride_(0),
-      offset_(nullptr)
+    : buf(0),
+    target(target),
+    numComponents_(attribBuffer->getNumComponents()),
+    numElements_(attribBuffer->getNumElements()),
+    totalComponents_(0),
+    type_(0),
+    normalize_(true),
+    stride_(0),
+    offset_(nullptr)
 
 {
     glGenBuffers(1, &buf);

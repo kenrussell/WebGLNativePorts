@@ -1,3 +1,8 @@
+//
+// Copyright (c) 2018 The WebGLNativePorts Project Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // Scene.h: Defines Scene class.
 
 #ifndef SCENE_H
@@ -16,7 +21,7 @@ class Scene {
 public:
   Scene() {}
   ~Scene();
-  Scene(std::string *opt_programIds, bool fog);
+  Scene(std::string* opt_programIds, bool fog);
 
   void load(const std::string &path, const std::string &name);
   const std::vector<Model *> &getModels() const { return models; }

@@ -1,3 +1,8 @@
+//
+// Copyright (c) 2018 The WebGLNativePorts Project Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // Scene.cpp: Implements Scene.
 // Load resources including images, vertexes and programs, then group them into models.
 
@@ -17,7 +22,20 @@
 #include "rapidjson/istreamwrapper.h"
 #include "rapidjson/stringbuffer.h"
 
-Scene::Scene(std::string *opt_programIds, bool fog) : programIds(opt_programIds), fog(fog) {}
+std::vector<std::string> g_skyBoxUrls = {
+    "GlobeOuter_EM_positive_x.jpg", "GlobeOuter_EM_negative_x.jpg", "GlobeOuter_EM_positive_y.jpg",
+    "GlobeOuter_EM_negative_y.jpg", "GlobeOuter_EM_positive_z.jpg", "GlobeOuter_EM_negative_z.jpg" };
+
+
+Scene::Scene(std::string* opt_programIds, bool fog)
+    : programIds(opt_programIds),
+    fog(fog),
+    url(),
+    models(NULL),
+    textureMap(NULL),
+    arrayMap(NULL)
+{
+}
 
 Scene::~Scene()
 {

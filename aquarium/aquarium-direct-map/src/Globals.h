@@ -1,3 +1,8 @@
+//
+// Copyright (c) 2018 The WebGLNativePorts Project Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // Globals.h: Define global variables, constant variables, global texture map, program map and
 // scene map.
 
@@ -15,10 +20,10 @@
 #include "Scene.h"
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-const std::string slash = "\\";
+constexpr char* slash = "\\";
 #define M_PI 3.141592653589793
 #else
-const std::string slash = "/";
+constexpr char* slash = "/";
 #endif
 
 class Scene;
@@ -58,27 +63,12 @@ constexpr float fish_specularFactor = 0.3f;
 
 struct G_ui_per
 {
-    std::string obj;
-    std::string name;
+    const char* obj;
+    const char* name;
     float value;
     float max;
     float min;
 };
-
-const G_ui_per g_ui[] = {
-    {"globals", "speed", 1.0f, 4.0f},           {"globals", "targetHeight", 0.0f, 150.0f},
-    {"globals", "targetRadius", 88.0f, 200.0f}, {"globals", "eyeHeight", 19.0f, 150.0f},
-    {"globals", "eyeSpeed", 0.06f, 1.0f},       {"globals", "fieldOfView", 85.0f, 179.0f, 1.0f},
-    {"globals", "ambientRed", 0.22f, 1.0f},     {"globals", "ambientGreen", 0.25f, 1.0f},
-    {"globals", "ambientBlue", 0.39f, 1.0f},    {"globals", "fogPower", 14.5f, 50.0f},
-    {"globals", "fogMult", 1.66f, 10.0f},       {"globals", "fogOffset", 0.53f, 3.0f},
-    {"globals", "fogRed", 0.54f, 1.0f},         {"globals", "fogGreen", 0.86f, 1.0f},
-    {"globals", "fogBlue", 1.0f, 1.0f},         {"fish", "fishHeightRange", 1.0f, 3.0f},
-    {"fish", "fishHeight", 25.0f, 50.0f},       {"fish", "fishSpeed", 0.124f, 2.0f},
-    {"fish", "fishOffset", 0.52f, 2.0f},        {"fish", "fishXClock", 1.0f, 2.0f},
-    {"fish", "fishYClock", 0.556f, 2.0f},       {"fish", "fishZClock", 1.0f, 2.0f},
-    {"fish", "fishTailSpeed", 1.0f, 30.0f},     {"innerConst", "refractionFudge", 3.0f, 50.0f},
-    {"innerConst", "eta", 1.0f, 1.20f},         {"innerConst", "tankColorFudge", 0.8f, 2.0f}};
 
 static std::unordered_map<std::string, std::unordered_map<std::string, float>>
     g;  // set min value as initialize value
@@ -137,7 +127,7 @@ static std::vector<float> ambient(4);
 static std::vector<float> fogColor = {1.0f, 1.0f, 1.0f, 1.0f};
 
 //Generic uniforms
-typedef struct GenericConst_
+struct GenericConst
 {
     std::vector<float> *viewProjection;
     std::vector<float> *viewInverse;
@@ -155,34 +145,34 @@ typedef struct GenericConst_
     float eta;
     float tankColorFudge;
     float refractionFudge;
-}GenericConst;
+};
 static GenericConst sandConst, genericConst, seaweedConst, outsideConst, innerConst;
 
-typedef struct GenericPer_
+struct GenericPer
 {
     std::vector<float> *world;
     std::vector<float> *worldViewProjection;
     std::vector<float> *worldInverse;
     std::vector<float> *worldInverseTranspose;
     float time;
-}GenericPer;
+};
 
 static GenericPer sandPer, genericPer, seaweedPer, outsidePer, innerPer, laserPer, skyPer;
 
-typedef struct SkyConst_
+struct SkyConst
 {
     std::vector<float> *viewProjectionInverse;
-}SkyConst;
+};
 
 static SkyConst skyConst;
 
-typedef struct FishPer_
+struct FishPer
 {
     std::vector<float> worldPosition;
     std::vector<float> nextPosition;
     float scale;
     float time;
-}FishPer;
+};
 
 static FishPer fishPer;
 
@@ -194,40 +184,6 @@ struct G_sceneInfo
     std::string group;
     bool blend;
 };
-
-static std::unordered_map<std::string, G_sceneInfo> g_sceneInfoByName;
-
-static G_sceneInfo g_sceneInfo[] = { { "SmallFishA", {"fishVertexShader", "fishReflectionFragmentShader"}, true },
-    { "MediumFishA", {"fishVertexShader", "fishNormalMapFragmentShader"}, true },
-    { "MediumFishB", {"fishVertexShader", "fishReflectionFragmentShader"}, true },
-    { "BigFishA", {"fishVertexShader", "fishNormalMapFragmentShader"}, true },
-    { "BigFishB", {"fishVertexShader", "fishNormalMapFragmentShader"}, true },
-    { "Arch", {"", ""}, true },
-    { "Coral", {"", ""}, true },
-    { "CoralStoneA", {"", ""}, true },
-    { "CoralStoneB", {"", ""}, true },
-    { "EnvironmentBox", {"diffuseVertexShader", "diffuseFragmentShader"}, false, "outside" },
-    { "FloorBase_Baked", {"", ""}, true },
-    { "FloorCenter", {"", ""}, true },
-    { "GlobeBase", {"diffuseVertexShader", "diffuseFragmentShader"} },
-    { "GlobeInner", {"innerRefractionMapVertexShader", "innerRefractionMapFragmentShader"}, true, "inner" },
-    { "RockA", {"", ""}, true },
-    { "RockB", {"", ""}, true },
-    { "RockC", {"", ""}, true },
-    { "RuinColumn", {"", ""}, true },
-    { "Skybox", {"diffuseVertexShader", "diffuseFragmentShader"}, false, "outside" },
-    { "Stone", {"", ""}, true },
-    { "Stones", {"", ""}, true },
-    { "SunknShip", {"", ""}, true },
-    { "SunknSub", {"", ""}, true },
-    { "SupportBeams", {"", ""}, false, "outside" },
-    { "SeaweedA", {"seaweedVertexShader", "seaweedFragmentShader"}, false, "seaweed", true },
-    { "SeaweedB", {"seaweedVertexShader", "seaweedFragmentShader"}, false, "seaweed", true },
-    { "TreasureChest", {"", ""}, true } };
-
-static std::vector<std::string> g_skyBoxUrls = {
-    "GlobeOuter_EM_positive_x.jpg", "GlobeOuter_EM_negative_x.jpg", "GlobeOuter_EM_positive_y.jpg",
-    "GlobeOuter_EM_negative_y.jpg", "GlobeOuter_EM_positive_z.jpg", "GlobeOuter_EM_negative_z.jpg"};
 
 struct ConstUniforms
 {
@@ -255,23 +211,17 @@ struct Fish {
     int num;
 };
 
-typedef struct FishConst_
+struct FishConst
 {
 	GenericConst genericConst;
 	ConstUniforms constUniforms;
-}FishConst;
+};
 
 static FishConst fishConst;
 
-static Fish g_fishTable[] = { { "SmallFishA", 1.0f, 1.5f, 30.0f, 25.0f, 10.0f, 0.0f, 16.0f, {10.0f, 1.0f, 2.0f} },
-    { "MediumFishA", 1.0f, 2.0f, 10.0f, 20.0f, 1.0f, 0.0f, 16.0f, {10.0f, -2.0f, 2.0f} },
-    { "MediumFishB", 0.5f, 4.0f, 10.0f, 20.0f, 3.0f, -8.0f, 5.0f, {10.0f, -2.0f, 2.0f} },
-    { "BigFishA", 0.5f, 0.5f, 50.0f, 3.0f, 1.5f, 0.0f, 16.0f, {10.0f, -1.0f, 0.5f}, true, 0.04f,{ 0.0f, 0.1f, 9.0f },{ 0.3f, 0.3f, 1000.0f } },
-    { "BigFishB", 0.5f, 0.5f, 45.0f, 3.0f, 1.0f, 0.0f, 16.0f, {10.0f, -0.7f, 0.3f}, true, 0.04f,{ 0.0f, -0.3f, 9.0f },{ 0.3f, 0.3f, 1000.0f } } };
-
-const std::string repoFolder = "aquarium-native";
-const std::string sourceFolder = "src";
-const std::string shaderFolder = "shaders";
-const std::string resourceFolder = "assets";
+constexpr char* repoFolder = "aquarium-native";
+constexpr char* sourceFolder = "src";
+constexpr char* shaderFolder = "shaders";
+constexpr char* resourceFolder = "assets";
 
 #endif

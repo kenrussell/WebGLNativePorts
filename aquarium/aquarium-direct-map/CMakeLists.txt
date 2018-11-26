@@ -1,3 +1,8 @@
+#
+# Copyright (c) 2018 The WebGLNativePorts Project Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+#
 cmake_minimum_required(VERSION 3.0)
 set (CMAKE_CXX_STANDARD 11)
 set(CMAKE_BUILD_TYPE Release)

@@ -1,3 +1,8 @@
+//
+// Copyright (c) 2018 The WebGLNativePorts Project Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // Model.cpp: Implements Model class. Apply program for its model.
 // Update uniforms, textures and buffers for each frame.
 
@@ -9,7 +14,10 @@
 Model::Model(Program *program_,
              std::unordered_map<std::string, AttribBuffer *> *arrays,
              std::unordered_map<std::string, Texture *> *textures)
-    : textures(textures), program(program_), mode(GL_TRIANGLES)
+    : buffers(NULL),
+    textures(textures),
+    program(program_),
+    mode(GL_TRIANGLES)
 {
     setBuffers(arrays);
 

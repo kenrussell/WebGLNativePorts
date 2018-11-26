@@ -1,3 +1,8 @@
+//
+// Copyright (c) 2018 The WebGLNativePorts Project Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // Texture.h: Define Texture class.
 
 #ifndef TEXTURE_H
@@ -24,6 +29,10 @@ public:
   void DestroyImageData(uint8_t *pixels);
 
 private:
+  void setParameter(GLenum, GLint);
+  void uploadTextures();
+  bool isPowerOf2(int value);
+
   std::vector<std::string> urls;
   GLenum target;
   GLuint texture;
@@ -31,9 +40,6 @@ private:
   int width;
   int height;
   bool flip;
-  void setParameter(GLenum, GLint);
-  void uploadTextures();
-  bool isPowerOf2(int value);
 };
 
 #endif // !TEXTURE_H

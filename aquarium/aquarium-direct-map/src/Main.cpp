@@ -1,3 +1,8 @@
+//
+// Copyright (c) 2018 The WebGLNativePorts Project Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // Main.cpp: Create context and window for OpenGL graphics API.
 // Data preparation, load resources and wrap them into scenes.
 // Implements logic of rendering background, fishes, seaweeds and
@@ -51,6 +56,57 @@ int g_numFish;
 float then = 0.0f;
 float mClock = 0.0f;
 float eyeClock = 0.0f;
+
+const G_ui_per g_ui[] = {
+    { "globals", "speed", 1.0f, 4.0f },{ "globals", "targetHeight", 0.0f, 150.0f },
+    { "globals", "targetRadius", 88.0f, 200.0f },{ "globals", "eyeHeight", 19.0f, 150.0f },
+    { "globals", "eyeSpeed", 0.06f, 1.0f },{ "globals", "fieldOfView", 85.0f, 179.0f, 1.0f },
+    { "globals", "ambientRed", 0.22f, 1.0f },{ "globals", "ambientGreen", 0.25f, 1.0f },
+    { "globals", "ambientBlue", 0.39f, 1.0f },{ "globals", "fogPower", 14.5f, 50.0f },
+    { "globals", "fogMult", 1.66f, 10.0f },{ "globals", "fogOffset", 0.53f, 3.0f },
+    { "globals", "fogRed", 0.54f, 1.0f },{ "globals", "fogGreen", 0.86f, 1.0f },
+    { "globals", "fogBlue", 1.0f, 1.0f },{ "fish", "fishHeightRange", 1.0f, 3.0f },
+    { "fish", "fishHeight", 25.0f, 50.0f },{ "fish", "fishSpeed", 0.124f, 2.0f },
+    { "fish", "fishOffset", 0.52f, 2.0f },{ "fish", "fishXClock", 1.0f, 2.0f },
+    { "fish", "fishYClock", 0.556f, 2.0f },{ "fish", "fishZClock", 1.0f, 2.0f },
+    { "fish", "fishTailSpeed", 1.0f, 30.0f },{ "innerConst", "refractionFudge", 3.0f, 50.0f },
+    { "innerConst", "eta", 1.0f, 1.20f },{ "innerConst", "tankColorFudge", 0.8f, 2.0f } };
+
+G_sceneInfo g_sceneInfo[] = { { "SmallFishA",{ "fishVertexShader", "fishReflectionFragmentShader" }, true },
+{ "MediumFishA",{ "fishVertexShader", "fishNormalMapFragmentShader" }, true },
+{ "MediumFishB",{ "fishVertexShader", "fishReflectionFragmentShader" }, true },
+{ "BigFishA",{ "fishVertexShader", "fishNormalMapFragmentShader" }, true },
+{ "BigFishB",{ "fishVertexShader", "fishNormalMapFragmentShader" }, true },
+{ "Arch",{ "", "" }, true },
+{ "Coral",{ "", "" }, true },
+{ "CoralStoneA",{ "", "" }, true },
+{ "CoralStoneB",{ "", "" }, true },
+{ "EnvironmentBox",{ "diffuseVertexShader", "diffuseFragmentShader" }, false, "outside" },
+{ "FloorBase_Baked",{ "", "" }, true },
+{ "FloorCenter",{ "", "" }, true },
+{ "GlobeBase",{ "diffuseVertexShader", "diffuseFragmentShader" } },
+{ "GlobeInner",{ "innerRefractionMapVertexShader", "innerRefractionMapFragmentShader" }, true, "inner" },
+{ "RockA",{ "", "" }, true },
+{ "RockB",{ "", "" }, true },
+{ "RockC",{ "", "" }, true },
+{ "RuinColumn",{ "", "" }, true },
+{ "Skybox",{ "diffuseVertexShader", "diffuseFragmentShader" }, false, "outside" },
+{ "Stone",{ "", "" }, true },
+{ "Stones",{ "", "" }, true },
+{ "SunknShip",{ "", "" }, true },
+{ "SunknSub",{ "", "" }, true },
+{ "SupportBeams",{ "", "" }, false, "outside" },
+{ "SeaweedA",{ "seaweedVertexShader", "seaweedFragmentShader" }, false, "seaweed", true },
+{ "SeaweedB",{ "seaweedVertexShader", "seaweedFragmentShader" }, false, "seaweed", true },
+{ "TreasureChest",{ "", "" }, true } };
+
+std::unordered_map<std::string, G_sceneInfo> g_sceneInfoByName;
+
+Fish g_fishTable[] = { { "SmallFishA", 1.0f, 1.5f, 30.0f, 25.0f, 10.0f, 0.0f, 16.0f,{ 10.0f, 1.0f, 2.0f } },
+{ "MediumFishA", 1.0f, 2.0f, 10.0f, 20.0f, 1.0f, 0.0f, 16.0f,{ 10.0f, -2.0f, 2.0f } },
+{ "MediumFishB", 0.5f, 4.0f, 10.0f, 20.0f, 3.0f, -8.0f, 5.0f,{ 10.0f, -2.0f, 2.0f } },
+{ "BigFishA", 0.5f, 0.5f, 50.0f, 3.0f, 1.5f, 0.0f, 16.0f,{ 10.0f, -1.0f, 0.5f }, true, 0.04f,{ 0.0f, 0.1f, 9.0f },{ 0.3f, 0.3f, 1000.0f } },
+{ "BigFishB", 0.5f, 0.5f, 45.0f, 3.0f, 1.0f, 0.0f, 16.0f,{ 10.0f, -0.7f, 0.3f }, true, 0.04f,{ 0.0f, -0.3f, 9.0f },{ 0.3f, 0.3f, 1000.0f } } };
 
 void setGenericConstMatrix(GenericConst& genericConst) {
     genericConst.viewProjection = &viewProjection;
@@ -165,7 +221,7 @@ void LoadPlacement()
         }
 }
 
-Scene *loadScene(const std::string &name, std::string *opt_programIds, bool fog)
+Scene *loadScene(const std::string &name, std::string* opt_programIds, bool fog)
 {
     Scene *scene = new Scene(opt_programIds, fog);
     scene->load(path, name);

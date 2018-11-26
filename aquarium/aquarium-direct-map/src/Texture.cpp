@@ -1,3 +1,8 @@
+//
+// Copyright (c) 2018 The WebGLNativePorts Project Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // Texture.cpp: Load images by stb lib, flip the texture if needed.
 // Create texture2D or textureCubeMap, then upload the texture to gpu.
 
@@ -11,11 +16,17 @@
 #include "ASSERT.h"
 
 // initializs texture 2d
-Texture::Texture(const std::string &url, bool flip) : flip(flip)
+Texture::Texture(const std::string &url, bool flip)
+    : urls(NULL),
+    target(GL_TEXTURE_2D),
+    texture(0u),
+    params(NULL),
+    width(0),
+    height(0),
+    flip(flip)
 {
     std::string urlpath = url;
     urls.push_back(urlpath);
-    target = GL_TEXTURE_2D;
     glGenTextures(1, &texture);
 
     uploadTextures();

@@ -1,3 +1,8 @@
+//
+// Copyright (c) 2018 The WebGLNativePorts Project Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // Program.cpp: Implements Program class.
 // Load shaders from folder shaders.
 // Compiles OpenGL shaders and check if compiled success.
@@ -13,6 +18,10 @@
 #include "ASSERT.h"
 
 Program::Program(std::string vId, std::string fId)
+    : program(0u),
+    attribLocs(NULL),
+    uniforms(NULL),
+    textureUnits(NULL)
 {
     createProgramFromTags(vId, fId);
     createSetters();

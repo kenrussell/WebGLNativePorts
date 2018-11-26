@@ -1,3 +1,8 @@
+//
+// Copyright (c) 2018 The WebGLNativePorts Project Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // Model.h: Define Class Model for all of the models.
 // Contains programs, textures and buffers info of models.
 
@@ -11,10 +16,10 @@
 #include "Program.h"
 #include "Texture.h"
 
-typedef struct FishConst_ FishConst;
-typedef struct FishPer_ FishPer;
-typedef struct GenericConst_ GenericConst;
-typedef struct GenericPer_ GenericPer;
+struct FishConst;
+struct FishPer;
+struct GenericConst;
+struct GenericPer;
 
 class Model
 {
