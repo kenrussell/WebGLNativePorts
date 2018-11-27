@@ -81,7 +81,7 @@ void Scene::setupSkybox(const std::string &path)
     for (auto &v : g_skyBoxUrls)
     {
         std::ostringstream url;
-        url << path << sourceFolder << slash << resourceFolder << slash << v;
+        url << path << ".." << slash << resourceFolder << slash << v;
 
         v = url.str();
     }
@@ -90,12 +90,12 @@ void Scene::setupSkybox(const std::string &path)
 void Scene::load(const std::string &path, const std::string &name)
 {
     std::ostringstream oss;
-    oss << path << sourceFolder << slash << resourceFolder << slash;
+    oss << path << ".." << slash << resourceFolder << slash;
     std::string imagePath = oss.str();
     oss << name << ".js";
     std::string modelPath = oss.str();
     oss.str("");
-    oss << path << sourceFolder << slash << shaderFolder << slash;
+    oss << path << ".." << slash << shaderFolder << slash << shaderVersion << slash;
     std::string programPath = oss.str();
 
     this->url    = modelPath;

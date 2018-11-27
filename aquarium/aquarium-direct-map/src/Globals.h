@@ -222,6 +222,7 @@ static FishConst fishConst;
 constexpr char* repoFolder = "aquarium-native";
 constexpr char* sourceFolder = "src";
 constexpr char* shaderFolder = "shaders";
+constexpr char* shaderVersion = "opengl/450";
 constexpr char* resourceFolder = "assets";
 
 #endif

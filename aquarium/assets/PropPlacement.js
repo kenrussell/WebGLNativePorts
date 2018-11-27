@@ -1408,27 +1408,6 @@
             ]
         }, 
         {
-            "name": "GlobeOuter", 
-            "worldMatrix": [
-                1, 
-                0, 
-                0, 
-                0, 
-                0, 
-                1, 
-                0, 
-                0, 
-                0, 
-                0, 
-                1, 
-                0, 
-                0, 
-                0, 
-                0, 
-                1
-            ]
-        }, 
-        {
             "name": "GlobeBase", 
             "worldMatrix": [
                 1, 

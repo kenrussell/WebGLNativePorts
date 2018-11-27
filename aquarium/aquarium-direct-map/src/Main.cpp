@@ -179,7 +179,7 @@ void initializeGlobalInfo()
 void LoadPlacement()
 {
     std::ostringstream oss;
-    oss << path << sourceFolder << slash << resourceFolder << slash
+    oss << path << ".." << slash << resourceFolder << slash
         << "PropPlacement.js";
     std::string proppath = oss.str();
     std::ifstream PlacementStream(proppath, std::ios::in);
