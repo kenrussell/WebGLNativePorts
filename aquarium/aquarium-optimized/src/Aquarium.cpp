@@ -1,3 +1,8 @@
+//
+// Copyright (c) 2018 The WebGLNativePorts Project Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // Aquarium.cpp: Create context for specific graphics API.
 // Data preparation, load vertex and index buffer, images and shders.
 // Implements logic of rendering background, fishes, seaweeds and
@@ -31,7 +36,18 @@
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
 
-Aquarium::Aquarium() : context(nullptr), mFishCount(1)
+Aquarium::Aquarium()
+    : mModelEnumMap(NULL),
+    mTextureMap(NULL),
+    mProgramMap(NULL),
+    mAquariumModels(),
+    context(nullptr),
+    fpsTimer(),
+    mFishCount(1),
+    mBackendpath(""),
+    mShaderVersion(""),
+    mPath(""),
+    factory(nullptr)
 {
     g.then     = 0.0f;
     g.mclock   = 0.0f;

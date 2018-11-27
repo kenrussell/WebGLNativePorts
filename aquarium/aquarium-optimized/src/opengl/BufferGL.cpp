@@ -1,3 +1,8 @@
+//
+// Copyright (c) 2018 The WebGLNativePorts Project Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // BufferGL.cpp: Implements the index or vertex buffer wrappers and resource bindings of OpenGL.
 
 #include "BufferGL.h"
@@ -10,15 +15,16 @@ BufferGL::BufferGL(ContextGL *context,
                    unsigned int type,
                    bool normalize)
     : context(context),
-      mTotoalComponents(totalCmoponents),
-      mNumComponents(numComponents),
+      mBuf(0),
       mTarget(isIndex ? GL_ELEMENT_ARRAY_BUFFER : GL_ARRAY_BUFFER),
+      mNumComponents(numComponents),
+      mTotoalComponents(totalCmoponents),
+      mNumElements(mTotoalComponents / numComponents),
       mType(type),
       mNormalize(normalize),
       mStride(0),
       mOffset(nullptr)
 {
-    mNumElements = mTotoalComponents / numComponents;
     context->generateBuffer(&mBuf);
 }
 

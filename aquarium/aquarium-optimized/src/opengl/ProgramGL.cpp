@@ -1,3 +1,8 @@
+//
+// Copyright (c) 2018 The WebGLNativePorts Project Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // ProgramGL.cpp: Implement Program wrapper of OpenGL.
 // Load shaders from folder shaders/opengl.
 // Compiles OpenGL shaders and check if compiled success.
@@ -21,7 +26,9 @@
 #include "../Buffer.h"
 
 ProgramGL::ProgramGL(ContextGL *context, string vId, string fId)
-    : context(context), Program(vId, fId)
+    : mProgramId(0u),
+    context(context),
+    Program(vId, fId)
 {
     context->generateProgram(&mProgramId);
     context->generateVAO(&mVAO);

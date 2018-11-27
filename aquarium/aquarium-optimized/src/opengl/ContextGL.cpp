@@ -1,3 +1,8 @@
+//
+// Copyright (c) 2018 The WebGLNativePorts Project Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // ContextGL.cpp: Implements accessing functions to the graphics API of OpenGL.
 
 #include "../ASSERT.h"
@@ -17,7 +22,9 @@
 
 #include <iostream>
 
-ContextGL::ContextGL() {}
+ContextGL::ContextGL() 
+: mWindow(nullptr)
+{}
 
 ContextGL::~ContextGL() {}
 

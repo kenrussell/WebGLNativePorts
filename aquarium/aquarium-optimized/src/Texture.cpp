@@ -1,3 +1,8 @@
+//
+// Copyright (c) 2018 The WebGLNativePorts Project Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // Texture.cpp: Use stb image loader to loading images from files.
 
 #include "Texture.h"
@@ -10,7 +15,12 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-Texture::Texture(std::string name, const std::string &url) : mName(name), mFlip(true)
+Texture::Texture(std::string name, const std::string &url)
+    : mUrls(NULL),
+    mWidth(0),
+    mHeight(0),
+    mName(name),
+    mFlip(true)
 {
     std::string urlpath = url;
     mUrls.push_back(urlpath);

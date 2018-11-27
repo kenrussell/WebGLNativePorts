@@ -1,3 +1,8 @@
+//
+// Copyright (c) 2018 The WebGLNativePorts Project Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // Aquarium.h: Define global variables, enums, constant variables and Class Aquarium.
 
 #pragma once
@@ -28,10 +33,10 @@ const std::string slash = "/";
 #include "math.h"
 #endif
 
-const std::string repoFolder     = "aquarium-optimized";
-const std::string sourceFolder   = "src";
-const std::string shaderFolder   = "shaders";
-const std::string resourceFolder = "assets";
+constexpr char * repoFolder     = "aquarium-optimized";
+constexpr char * sourceFolder   = "src";
+constexpr char * shaderFolder   = "shaders";
+constexpr char * resourceFolder = "assets";
 
 enum MODELNAME : short
 {
@@ -77,9 +82,9 @@ enum MODELGROUP : short
 
 struct G_sceneInfo
 {
-    std::string namestr;
+    const char * namestr;
     MODELNAME name;
-    std::string program[2];
+    const char * program[2];
     bool fog;
     MODELGROUP type;
     bool blend;
@@ -174,7 +179,7 @@ const std::vector<std::string> g_skyBoxUrls = {
 
 struct Fish
 {
-    std::string name;
+    const char * name;
     MODELNAME modelName;
     FISHENUM type;
     float speed;

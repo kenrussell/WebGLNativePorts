@@ -1,3 +1,8 @@
+//
+// Copyright (c) 2018 The WebGLNativePorts Project Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // TextureGL.cpp. Wrap textures of OpenGL. Load image files and wrap into an OpenGL texture.
 
 #include "TextureGL.h"
@@ -6,7 +11,10 @@
 
 // initializs texture 2d
 TextureGL::TextureGL(ContextGL *context, std::string name, std::string url)
-    : context(context), mTarget(GL_TEXTURE_2D), mFormat(GL_RGBA), Texture(name, url)
+    : mTarget(GL_TEXTURE_2D),
+    mFormat(GL_RGBA),
+    context(context),
+    Texture(name, url)
 {
     context->generateTexture(&mTextureId);
 }

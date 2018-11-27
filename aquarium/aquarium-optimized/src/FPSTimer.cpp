@@ -1,9 +1,19 @@
+//
+// Copyright (c) 2018 The WebGLNativePorts Project Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // FPSTimer.cpp: Implement fps timer.
 
 #include "FPSTimer.h"
 #include <cmath>
 
-FPSTimer::FPSTimer() : mTotalTime(static_cast<float>(NUM_FRAMES_TO_AVERAGE)), mTimeTableCursor(0)
+FPSTimer::FPSTimer()
+    : mTotalTime(static_cast<float>(NUM_FRAMES_TO_AVERAGE)),
+    mTimeTable(NULL),
+    mTimeTableCursor(0),
+    mInstantaneousFPS(0.0f),
+    mAverageFPS(0.0f)
 {
     for (int i = 0; i < NUM_FRAMES_TO_AVERAGE; ++i)
     {

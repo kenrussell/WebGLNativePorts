@@ -1,3 +1,8 @@
+//
+// Copyright (c) 2018 The WebGLNativePorts Project Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
 // Matrix.h: Do matrix calculations including multiply, addition, substraction,
 // transpose, inverse, translation, etc.
 
